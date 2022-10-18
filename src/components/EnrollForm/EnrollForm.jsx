@@ -1,7 +1,7 @@
 import "./EnrollForm.style.scss";
 import { Button } from "antd";
 import { db } from "../../utils/firebase/firebase.utils";
-import { doc, getDoc, collection, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";

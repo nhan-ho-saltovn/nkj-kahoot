@@ -1,8 +1,10 @@
 import { useState } from "react";
 import QuizBoard from "../../components/QuizBoard/QuizBoard";
+import WaitingDashboard from "../../components/WaitingDashboard/WaitingDashboard";
 
 const Game = () => {
   const [questionNumber, setQuestionNumber] = useState(0);
+  const [isStart, setIsStart] = useState(false);
 
   const goToNextQuestion = () => {
     setQuestionNumber(questionNumber + 1);
@@ -10,6 +12,10 @@ const Game = () => {
 
   const goToPreviosQuestion = () => {
     setQuestionNumber(questionNumber - 1);
+  };
+
+  const startGame = () => {
+    setIsStart(true);
   };
   const questionList = [
     {
@@ -26,11 +32,15 @@ const Game = () => {
   ];
   return (
     <div>
-      <QuizBoard
-        questionData={questionList[0]}
-        goToNextQuestion={goToNextQuestion}
-        goToPreviosQuestion={goToPreviosQuestion}
-      />
+      {isStart ? (
+        <QuizBoard
+          questionData={questionList[0]}
+          goToNextQuestion={goToNextQuestion}
+          goToPreviosQuestion={goToPreviosQuestion}
+        />
+      ) : (
+        <WaitingDashboard startGame={startGame} />
+      )}
     </div>
   );
 };
