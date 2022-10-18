@@ -2,25 +2,37 @@ import "./EnrollForm.style.scss";
 import { Button } from "antd";
 import { db } from "../../utils/firebase/firebase.utils";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
+import { AuthContext, AUTH_ACTION_TYPES } from "../../context/auth.context";
 
 const EnrollForm = () => {
+  const { dispatch } = useContext(AuthContext);
   const [input, setInput] = useState("");
   const [name, setName] = useState("");
   const navigate = useNavigate();
 
   const submitInput = async () => {
-    const docRef = doc(db, "questionList", input);
+    const docRef = doc(db, "questionList", "Test1", "games", input);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       const id = uuid();
       localStorage.setItem("player", id);
-      await setDoc(doc(db, "questionList", "Test1", "game1", id), {
-        name: name,
-        point: 0,
+      dispatch({
+        type: AUTH_ACTION_TYPES.JOIN,
+        payload: {
+          id: id,
+          name: name,
+        },
       });
+      await setDoc(
+        doc(db, "questionList", "Test1", "games", "game1", "players", id),
+        {
+          name: name,
+          point: 0,
+        }
+      );
       navigate(`/${input}`);
     } else {
       console.log("No such document!");

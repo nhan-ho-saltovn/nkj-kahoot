@@ -1,12 +1,14 @@
 import PlayerCard from "../PlayerCard/PlayerCard";
 import { db } from "../../utils/firebase/firebase.utils";
-import { collection, query, where, onSnapshot } from "firebase/firestore";
+import { collection, query, onSnapshot } from "firebase/firestore";
 import { useState } from "react";
 import "./WaitingDashboard.style.scss";
 import { useEffect } from "react";
 
 const WaitingDashboard = ({ startGame }) => {
-  const q = query(collection(db, "questionList", "Test1", "game1"));
+  const q = query(
+    collection(db, "questionList", "Test1", "games", "game1", "players")
+  );
   const [players, setPlayers] = useState([]);
   const unsubscribe = onSnapshot(q, (docs) => {
     setPlayers(

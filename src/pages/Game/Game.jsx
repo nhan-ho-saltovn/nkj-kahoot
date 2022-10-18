@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { db } from "../../utils/firebase/firebase.utils";
+import { doc, setDoc, onSnapshot } from "firebase/firestore";
 import QuizBoard from "../../components/QuizBoard/QuizBoard";
 import WaitingDashboard from "../../components/WaitingDashboard/WaitingDashboard";
 
 const Game = () => {
   const [questionNumber, setQuestionNumber] = useState(0);
-  const [isStart, setIsStart] = useState(false);
+  const [isStart, setIsStart] = useState("PENDING");
+  const unsub = onSnapshot(
+    doc(db, "questionList", "Test1", "games", "game1"),
+    (doc) => {
+      setIsStart(doc.data().status);
+    }
+  );
 
   const goToNextQuestion = () => {
     setQuestionNumber(questionNumber + 1);
@@ -14,9 +22,16 @@ const Game = () => {
     setQuestionNumber(questionNumber - 1);
   };
 
-  const startGame = () => {
-    setIsStart(true);
+  const startGame = async () => {
+    await setDoc(doc(db, "questionList", "Test1", "games", "game1"), {
+      status: "STARTING",
+    });
   };
+
+  useEffect(() => {
+    unsub();
+  }, [isStart]);
+
   const questionList = [
     {
       index: "1",
@@ -32,7 +47,7 @@ const Game = () => {
   ];
   return (
     <div>
-      {isStart ? (
+      {isStart === "STARTING" ? (
         <QuizBoard
           questionData={questionList[0]}
           goToNextQuestion={goToNextQuestion}
