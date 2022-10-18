@@ -1,0 +1,11 @@
+.timer-progress-bars {
+    background-color: purple;
+    height: 10px;
+    border-radius: 10px;
+    animation: timerCountDown 10s linear;
+}
+
+@keyframes timerCountDown {
+    0%  {width: 100vw}
+    100% {width: 0%}
+}
