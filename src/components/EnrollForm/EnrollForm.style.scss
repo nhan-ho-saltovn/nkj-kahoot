@@ -1,7 +1,9 @@
 .enroll-form {
-    margin-top: 40vh;
+    margin-top: 35vh;
     
-    .game-pin-input {
+    .game-pin-input, .name-input {
         width: 100%;
+        padding-right: 50px;
+        margin-right: 10px;
     }
 }
