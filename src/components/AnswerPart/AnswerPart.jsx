@@ -1,9 +1,23 @@
 import AnswerButton from "../AnswerButton/AnswerButton";
 import "./AnswerPart.style.scss";
-import { useState, useEffect } from "react";
-const AnswerPart = ({ isTimimg, answers, correctAnswer, setIsCorrect }) => {
-  const [selectedAnswer, setSelectedAnswer] = useState("");
+import { useState, useEffect, useContext } from "react";
+import { db } from "../../utils/firebase/firebase.utils";
+import { doc, setDoc, onSnapshot, getDoc } from "firebase/firestore";
+import { AuthContext } from "../../context/auth.context";
 
+const AnswerPart = ({
+  isTimimg,
+  answers,
+  correctAnswer,
+  setIsCorrect,
+  currentTime,
+  answerTime,
+  setAnswerTime,
+  totalPoint,
+  setTotalPoint,
+}) => {
+  const { user } = useContext(AuthContext);
+  const [selectedAnswer, setSelectedAnswer] = useState("");
   const colorArray = ["#ea4c46", "blue", "#228c22", "#DE970B"];
   const answerCharacterArray = ["A", "B", "C", "D"];
 
@@ -15,6 +29,17 @@ const AnswerPart = ({ isTimimg, answers, correctAnswer, setIsCorrect }) => {
     };
   });
 
+  const updatePoint = async () => {
+    await setDoc(
+      doc(db, "questionList", "Test1", "games", "game1", "players", user.id),
+      {
+        name: user.name,
+        point: totalPoint + 10000 - (answerTime - currentTime),
+      }
+    );
+    setTotalPoint(totalPoint + 10000 - (answerTime - currentTime));
+  };
+
   useEffect(() => {
     if (
       selectedAnswer === correctAnswer ||
@@ -24,20 +49,25 @@ const AnswerPart = ({ isTimimg, answers, correctAnswer, setIsCorrect }) => {
         )[0].content
     ) {
       setIsCorrect(true);
+      updatePoint();
     } else {
       setIsCorrect(false);
     }
   }, [selectedAnswer]);
+
   return (
     <div className="answer-part">
       {isTimimg
         ? answerArray?.map((answer, index) => (
             <AnswerButton
+              type="timing-btn"
               key={index}
               answerCharacter={answer.answerCharacter}
               color={answer.color}
               content={answer.content}
               setSelectedAnswer={setSelectedAnswer}
+              setAnswerTime={setAnswerTime}
+              answerTime={answerTime}
             />
           ))
         : answerArray?.map((answer, index) => {
@@ -48,7 +78,6 @@ const AnswerPart = ({ isTimimg, answers, correctAnswer, setIsCorrect }) => {
                   answerCharacter={answer.answerCharacter}
                   color={colorArray[2]}
                   content={answer.content}
-                  setSelectedAnswer={setSelectedAnswer}
                 />
               );
             else {
@@ -58,7 +87,6 @@ const AnswerPart = ({ isTimimg, answers, correctAnswer, setIsCorrect }) => {
                   answerCharacter={answer.answerCharacter}
                   color={colorArray[0]}
                   content={answer.content}
-                  setSelectedAnswer={setSelectedAnswer}
                 />
               );
             }

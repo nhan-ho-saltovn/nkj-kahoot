@@ -8,7 +8,10 @@ const QuizBoard = () => {
   const [questionNumber, setQuestionNumber] = useState(0);
   const [isTimimg, setIsTimimg] = useState(true);
   const [isCorrect, setIsCorrect] = useState(false);
+  const [answerTime, setAnswerTime] = useState(0);
+  const [totalPoint, setTotalPoint] = useState(0);
   const { questions } = useContext(GameContext);
+  const [currentTime, setCurrentTime] = useState(Date.now());
 
   const goToNextQuestion = () => {
     setQuestionNumber(questionNumber + 1);
@@ -30,6 +33,7 @@ const QuizBoard = () => {
 
   useEffect(() => {
     let timer = setTimeout(() => setIsTimimg(false), 10000);
+    setCurrentTime(Date.now());
     return () => {
       clearTimeout(timer);
     };
@@ -83,6 +87,11 @@ const QuizBoard = () => {
         answers={questions[questionNumber].answer}
         correctAnswer={questions[questionNumber].correctAnswer}
         setIsCorrect={setIsCorrect}
+        currentTime={currentTime}
+        answerTime={answerTime}
+        setAnswerTime={setAnswerTime}
+        totalPoint={totalPoint}
+        setTotalPoint={setTotalPoint}
       />
     </div>
   );
