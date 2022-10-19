@@ -1,8 +1,14 @@
-const AnswerButton = ({ answerCharacter, color, content }) => {
+const AnswerButton = ({
+  answerCharacter,
+  color,
+  content,
+  setSelectedAnswer,
+}) => {
   return (
     <div
       className="answer-button"
       style={{ display: "flex", justifyContent: "center" }}
+      onClick={(e) => setSelectedAnswer(e.target.innerHTML)}
     >
       <button
         style={{

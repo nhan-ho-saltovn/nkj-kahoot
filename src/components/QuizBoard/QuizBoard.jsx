@@ -7,26 +7,32 @@ import { GameContext } from "../../context/game.context";
 const QuizBoard = () => {
   const [questionNumber, setQuestionNumber] = useState(0);
   const [isTimimg, setIsTimimg] = useState(true);
+  const [isCorrect, setIsCorrect] = useState(false);
   const { questions } = useContext(GameContext);
-
-  console.log(questions);
 
   const goToNextQuestion = () => {
     setQuestionNumber(questionNumber + 1);
-    setIsTimimg(true);
+    setTimeout(() => {
+      setIsTimimg(true);
+    }, 1);
+    setIsTimimg(false);
+    setIsCorrect(false);
   };
 
   const goToPreviosQuestion = () => {
     setQuestionNumber(questionNumber - 1);
-    setIsTimimg(true);
-  };
-
-  const timeUpHandle = () => {
+    setTimeout(() => {
+      setIsTimimg(true);
+    }, 1);
     setIsTimimg(false);
+    setIsCorrect(false);
   };
 
   useEffect(() => {
-    setTimeout(timeUpHandle, 10000);
+    let timer = setTimeout(() => setIsTimimg(false), 10000);
+    return () => {
+      clearTimeout(timer);
+    };
   }, [questionNumber]);
 
   return (
@@ -76,6 +82,7 @@ const QuizBoard = () => {
         isTimimg={isTimimg}
         answers={questions[questionNumber].answer}
         correctAnswer={questions[questionNumber].correctAnswer}
+        setIsCorrect={setIsCorrect}
       />
     </div>
   );
