@@ -3,6 +3,7 @@ const AnswerButton = ({
   answerCharacter,
   color,
   content,
+  selectedAnswer,
   setSelectedAnswer,
   setAnswerTime,
   answerTime,
@@ -30,6 +31,7 @@ const AnswerButton = ({
             console.log(answerTime);
             console.log(e.target.innerHTML);
           }}
+          disabled={!!selectedAnswer}
         >
           <div>{answerCharacter}</div>
           <div>{content}</div>

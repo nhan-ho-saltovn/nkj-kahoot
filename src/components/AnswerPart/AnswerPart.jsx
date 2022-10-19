@@ -55,6 +55,10 @@ const AnswerPart = ({
     }
   }, [selectedAnswer]);
 
+  useEffect(() => {
+    setSelectedAnswer("");
+  }, [answers]);
+
   return (
     <div className="answer-part">
       {isTimimg
@@ -65,6 +69,7 @@ const AnswerPart = ({
               answerCharacter={answer.answerCharacter}
               color={answer.color}
               content={answer.content}
+              selectedAnswer={selectedAnswer}
               setSelectedAnswer={setSelectedAnswer}
               setAnswerTime={setAnswerTime}
               answerTime={answerTime}
