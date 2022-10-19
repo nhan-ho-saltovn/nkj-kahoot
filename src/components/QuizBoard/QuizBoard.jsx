@@ -1,16 +1,40 @@
 import AnswerPart from "../AnswerPart/AnswerPart";
 import Timer from "../Timer/Timer";
 import { Button } from "antd";
+import { useState, useEffect, useContext } from "react";
+import { GameContext } from "../../context/game.context";
 
-const QuizBoard = ({ questionData, goToNextQuestion, goToPreviosQuestion }) => {
-  const { index, question, answerList, ...restData } = questionData;
-  console.log(restData);
+const QuizBoard = () => {
+  const [questionNumber, setQuestionNumber] = useState(0);
+  const [isTimimg, setIsTimimg] = useState(true);
+  const { questions } = useContext(GameContext);
+
+  console.log(questions);
+
+  const goToNextQuestion = () => {
+    setQuestionNumber(questionNumber + 1);
+    setIsTimimg(true);
+  };
+
+  const goToPreviosQuestion = () => {
+    setQuestionNumber(questionNumber - 1);
+    setIsTimimg(true);
+  };
+
+  const timeUpHandle = () => {
+    setIsTimimg(false);
+  };
+
+  useEffect(() => {
+    setTimeout(timeUpHandle, 10000);
+  }, [questionNumber]);
+
   return (
     <div className="quiz-board">
       <div style={{ marginBottom: 80 }}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div className="question-index" style={{ fontSize: 40 }}>
-            Question {index}:
+            Question {questionNumber + 1}:
           </div>
           <div style={{ display: "flex", alignItems: "center" }}>
             <Button type="primary" onClick={goToPreviosQuestion}>
@@ -30,15 +54,15 @@ const QuizBoard = ({ questionData, goToNextQuestion, goToPreviosQuestion }) => {
             paddingBottom: 20,
           }}
         >
-          {question}
+          {questions[questionNumber].question}
         </div>
-        {restData.imgUrl ? (
+        {questions[questionNumber].imgUrl ? (
           <div
             className="question-image"
             style={{ display: "flex", justifyContent: "center" }}
           >
             <img
-              src={restData?.imgUrl}
+              src={questions[questionNumber].imgUrl}
               alt="img"
               style={{ height: "50vh", marginTop: 20 }}
             />
@@ -46,9 +70,13 @@ const QuizBoard = ({ questionData, goToNextQuestion, goToPreviosQuestion }) => {
         ) : (
           <div style={{ backgroundColor: "#d3d3d3", height: "50vh" }}></div>
         )}
-        <Timer />
+        {isTimimg && <Timer />}
       </div>
-      <AnswerPart answerList={answerList} />
+      <AnswerPart
+        isTimimg={isTimimg}
+        answers={questions[questionNumber].answer}
+        correctAnswer={questions[questionNumber].correctAnswer}
+      />
     </div>
   );
 };

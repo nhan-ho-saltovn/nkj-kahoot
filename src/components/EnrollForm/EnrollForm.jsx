@@ -1,14 +1,16 @@
 import "./EnrollForm.style.scss";
 import { Button } from "antd";
 import { db } from "../../utils/firebase/firebase.utils";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, getDocs, collection } from "firebase/firestore";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 import { AuthContext, AUTH_ACTION_TYPES } from "../../context/auth.context";
+import { GameContext, GAME_ACTION_TYPES } from "../../context/game.context";
 
 const EnrollForm = () => {
-  const { dispatch } = useContext(AuthContext);
+  const { dispatch: authDispatch } = useContext(AuthContext);
+  const { dispatch: gameDispatch } = useContext(GameContext);
   const [input, setInput] = useState("");
   const [name, setName] = useState("");
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ const EnrollForm = () => {
     if (docSnap.exists()) {
       const id = uuid();
       localStorage.setItem("player", id);
-      dispatch({
+      authDispatch({
         type: AUTH_ACTION_TYPES.JOIN,
         payload: {
           id: id,
@@ -33,6 +35,20 @@ const EnrollForm = () => {
           point: 0,
         }
       );
+      const questionsSnapshot = await getDocs(
+        collection(db, "questionList", "Test1", "questions")
+      );
+      const questions = [];
+      questionsSnapshot.forEach((doc) => questions.push(doc.data()));
+
+      gameDispatch({
+        type: GAME_ACTION_TYPES.PLAY,
+        payload: {
+          game: input,
+          questions: questions,
+        },
+      });
+
       navigate(`/${input}`);
     } else {
       console.log("No such document!");
