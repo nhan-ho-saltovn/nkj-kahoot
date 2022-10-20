@@ -1,7 +1,8 @@
-const PointCard = () => {
+const PointCard = ({ name, point }) => {
   return (
-    <div>
-      <div></div>
+    <div className="point-card" style={{ display: "flex" }}>
+      <div>{name}</div>
+      <div>{point}</div>
     </div>
   );
 };
