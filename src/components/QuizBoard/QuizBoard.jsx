@@ -72,6 +72,7 @@ const QuizBoard = () => {
       setIsTimimg(true);
     }, 1);
     setIsTimimg(false);
+    setIsShowResult(false);
     setCurrentTime(Date.now());
     unsubQuestionNumber();
     unsubCurrentTiming();
