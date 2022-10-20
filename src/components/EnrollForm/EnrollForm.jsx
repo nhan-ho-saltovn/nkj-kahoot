@@ -70,8 +70,8 @@ const EnrollForm = () => {
       </div>
       <div style={{ display: "flex" }}>
         <div>
-          <div style={{ display: "flex", color: "white" }}>
-            <div style={{ width: 70 }}>Game Pin: </div>
+          <div style={{ display: "flex" }}>
+            <div style={{ width: 70, color: "white" }}>Game Pin: </div>
             <input
               className="game-pin-input rounded-md"
               onChange={(e) => {
@@ -79,8 +79,8 @@ const EnrollForm = () => {
               }}
             />
           </div>
-          <div style={{ display: "flex", color: "white", marginTop: 10 }}>
-            <div style={{ width: 70 }}>Your Name: </div>
+          <div style={{ display: "flex", marginTop: 10 }}>
+            <div style={{ width: 70, color: "white" }}>Your Name: </div>
             <input
               className="name-input rounded-md"
               onChange={(e) => {

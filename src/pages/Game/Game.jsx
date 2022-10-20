@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { db } from "../../utils/firebase/firebase.utils";
-import { doc, setDoc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import QuizBoard from "../../components/QuizBoard/QuizBoard";
 import WaitingDashboard from "../../components/WaitingDashboard/WaitingDashboard";
 
@@ -15,7 +15,7 @@ const Game = () => {
   );
 
   const startGame = async () => {
-    await setDoc(doc(db, "questionList", "Test1", "games", "game1"), {
+    await updateDoc(doc(db, "questionList", "Test1", "games", "game1"), {
       status: "STARTING",
     });
   };

@@ -26,7 +26,7 @@ const WaitingDashboard = ({ startGame }) => {
 
   return (
     <div
-      className="waiting-dashboard d-flex justify-center"
+      className="waiting-dashboard flex justify-center"
       style={{
         backgroundImage: "url('https://wallpaperaccess.com/full/269150.jpg')",
         width: "100vw",
