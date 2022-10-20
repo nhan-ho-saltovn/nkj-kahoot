@@ -26,13 +26,11 @@ const WaitingDashboard = ({ startGame }) => {
 
   return (
     <div
-      className="waiting-dashboard"
+      className="waiting-dashboard d-flex justify-center"
       style={{
         backgroundImage: "url('https://wallpaperaccess.com/full/269150.jpg')",
         width: "100vw",
         height: "100vh",
-        display: "flex",
-        justifyContent: "center",
       }}
     >
       <div className="player-display">

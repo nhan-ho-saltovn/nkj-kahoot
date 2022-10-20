@@ -71,25 +71,30 @@ const EnrollForm = () => {
       <div style={{ display: "flex" }}>
         <div>
           <div style={{ display: "flex", color: "white" }}>
-            <div>Game Pin: </div>
+            <div style={{ width: 70 }}>Game Pin: </div>
             <input
-              className="game-pin-input"
+              className="game-pin-input rounded-md"
               onChange={(e) => {
                 setInput(e.target.value);
               }}
             />
           </div>
           <div style={{ display: "flex", color: "white", marginTop: 10 }}>
-            <div>Your Name </div>
+            <div style={{ width: 70 }}>Your Name: </div>
             <input
-              className="name-input"
+              className="name-input rounded-md"
               onChange={(e) => {
                 setName(e.target.value);
               }}
             />
           </div>
         </div>
-        <Button type="primary" onClick={submitInput}>
+        <Button
+          type="primary"
+          onClick={submitInput}
+          className="p-2 rounded font-bold"
+          style={{ backgroundColor: "#E17F34", color: "white" }}
+        >
           Enter
         </Button>
       </div>
