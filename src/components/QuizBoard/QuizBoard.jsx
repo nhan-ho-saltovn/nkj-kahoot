@@ -75,15 +75,21 @@ const QuizBoard = () => {
           </div>
           <div style={{ display: "flex", alignItems: "center" }}>
             {!isShowResult ? (
-              <Button onClick={seeResult}>See Result</Button>
+              <Button onClick={seeResult} disabled={isTimimg}>
+                See Result
+              </Button>
             ) : (
               <div>
-                <Button type="primary" onClick={goToPreviosQuestion}>
-                  Prev Question
-                </Button>
-                <Button type="primary" onClick={goToNextQuestion}>
-                  Next Question
-                </Button>
+                {!!questionNumber && (
+                  <Button type="primary" onClick={goToPreviosQuestion}>
+                    Prev Question
+                  </Button>
+                )}
+                {!!(questionNumber - questions.length + 1) && (
+                  <Button type="primary" onClick={goToNextQuestion}>
+                    Next Question
+                  </Button>
+                )}
               </div>
             )}
           </div>
