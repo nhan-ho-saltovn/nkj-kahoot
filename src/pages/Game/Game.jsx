@@ -5,7 +5,7 @@ import QuizBoard from "../../components/QuizBoard/QuizBoard";
 import WaitingDashboard from "../../components/WaitingDashboard/WaitingDashboard";
 
 const Game = () => {
-  const [isStart, setIsStart] = useState("STARTING");
+  const [isStart, setIsStart] = useState("WAITING");
 
   const unsub = onSnapshot(
     doc(db, "questionList", "Test1", "games", "game1"),
