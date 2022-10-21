@@ -14,7 +14,6 @@ const QuizBoard = () => {
   const [answerTime, setAnswerTime] = useState(0);
   const [totalPoint, setTotalPoint] = useState(0);
   const { questions } = useContext(GameContext);
-  const [currentTiming, setCurrentTiming] = useState(10);
   const [currentTime, setCurrentTime] = useState(Date.now());
   const [isShowResult, setIsShowResult] = useState(false);
 
@@ -22,13 +21,6 @@ const QuizBoard = () => {
     doc(db, "questionList", "Test1", "games", "game1"),
     (doc) => {
       setQuestionNumber(doc.data().currentQuestion - 1);
-    }
-  );
-
-  const unsubCurrentTiming = onSnapshot(
-    doc(db, "questionList", "Test1", "games", "game1"),
-    (doc) => {
-      setCurrentTiming(doc.data().currentTiming);
     }
   );
 
@@ -41,9 +33,6 @@ const QuizBoard = () => {
     updateDoc(doc(db, "questionList", "Test1", "games", "game1"), {
       currentQuestion: questionNumber + 2,
     });
-    updateDoc(doc(db, "questionList", "Test1", "games", "game1"), {
-      currentTiming: 10,
-    });
     setIsShowResult(false);
   };
 
@@ -55,9 +44,6 @@ const QuizBoard = () => {
     setIsCorrect(false);
     updateDoc(doc(db, "questionList", "Test1", "games", "game1"), {
       currentQuestion: questionNumber,
-    });
-    updateDoc(doc(db, "questionList", "Test1", "games", "game1"), {
-      currentTiming: 10,
     });
     setIsShowResult(false);
   };
@@ -75,7 +61,6 @@ const QuizBoard = () => {
     setIsShowResult(false);
     setCurrentTime(Date.now());
     unsubQuestionNumber();
-    unsubCurrentTiming();
     return () => {
       clearTimeout(timer);
     };
@@ -139,7 +124,6 @@ const QuizBoard = () => {
       {!isShowResult && (
         <AnswerPart
           isTimimg={isTimimg}
-          currentTiming={currentTiming}
           answers={questions[questionNumber].answer}
           correctAnswer={questions[questionNumber].correctAnswer}
           setIsCorrect={setIsCorrect}
