@@ -10,17 +10,18 @@ const WaitingDashboard = ({ startGame }) => {
     collection(db, "questionList", "Test1", "games", "game1", "players")
   );
   const [players, setPlayers] = useState([]);
-  const unsubscribe = onSnapshot(q, (docs) => {
-    setPlayers(
-      docs.docs.map((doc) => {
-        return {
-          ...doc.data(),
-        };
-      })
-    );
-  });
 
   useEffect(() => {
+    const unsubscribe = onSnapshot(q, (docs) => {
+      setPlayers(
+        docs.docs.map((doc) => {
+          return {
+            ...doc.data(),
+          };
+        })
+      );
+    });
+
     unsubscribe();
   }, [players]);
 

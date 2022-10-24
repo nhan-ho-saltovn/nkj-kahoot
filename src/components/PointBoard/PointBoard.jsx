@@ -9,7 +9,6 @@ import {
 } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import PointCard from "../PointCard/PointCard";
-import { Typography } from "antd";
 
 const PointBoard = () => {
   const q = query(
@@ -18,17 +17,18 @@ const PointBoard = () => {
     limit(5)
   );
   const [players, setPlayers] = useState([]);
-  const unsubscribe = onSnapshot(q, (docs) => {
-    setPlayers(
-      docs.docs.map((doc) => {
-        return {
-          ...doc.data(),
-        };
-      })
-    );
-  });
 
   useEffect(() => {
+    const unsubscribe = onSnapshot(q, (docs) => {
+      setPlayers(
+        docs.docs.map((doc) => {
+          return {
+            ...doc.data(),
+          };
+        })
+      );
+    });
+
     unsubscribe();
   }, [players]);
 

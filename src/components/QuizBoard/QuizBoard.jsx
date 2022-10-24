@@ -17,13 +17,6 @@ const QuizBoard = () => {
   const [currentTime, setCurrentTime] = useState(Date.now());
   const [isShowResult, setIsShowResult] = useState(false);
 
-  const unsubQuestionNumber = onSnapshot(
-    doc(db, "questionList", "Test1", "games", "game1"),
-    (doc) => {
-      setQuestionNumber(doc.data().currentQuestion - 1);
-    }
-  );
-
   const goToNextQuestion = () => {
     setTimeout(() => {
       setIsTimimg(true);
@@ -53,10 +46,19 @@ const QuizBoard = () => {
   };
 
   useEffect(() => {
+    const unsubQuestionNumber = onSnapshot(
+      doc(db, "questionList", "Test1", "games", "game1"),
+      (doc) => {
+        setQuestionNumber(doc.data().currentQuestion - 1);
+      }
+    );
+
     let timer = setTimeout(() => setIsTimimg(false), 10000);
+
     setTimeout(() => {
       setIsTimimg(true);
     }, 1);
+
     setIsTimimg(false);
     setIsShowResult(false);
     setCurrentTime(Date.now());
