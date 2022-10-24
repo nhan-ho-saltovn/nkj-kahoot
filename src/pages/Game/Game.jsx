@@ -8,9 +8,15 @@ const Game = () => {
   const [isStart, setIsStart] = useState("WAITING");
 
   const unsub = () => {
-    onSnapshot(doc(db, "questionList", "Test1", "games", "game1"), (doc) => {
-      setIsStart(doc.data().status);
-    });
+    onSnapshot(
+      doc(db, "questionList", "Test1", "games", "game1"),
+      (doc) => {
+        setIsStart(doc.data().status);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
     console.log("load");
   };
 
