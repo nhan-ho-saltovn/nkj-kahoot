@@ -25,13 +25,8 @@ const Game = () => {
           console.log(error);
         }
       );
-      console.log("load");
     };
-
     unsub();
-    return () => {
-      unsub();
-    };
   }, [isStart]);
 
   return (
