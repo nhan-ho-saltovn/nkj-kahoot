@@ -12,15 +12,17 @@ const WaitingDashboard = ({ startGame }) => {
   const [players, setPlayers] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(q, (docs) => {
-      setPlayers(
-        docs.docs.map((doc) => {
-          return {
-            ...doc.data(),
-          };
-        })
-      );
-    });
+    const unsubscribe = () => {
+      onSnapshot(q, (docs) => {
+        setPlayers(
+          docs.docs.map((doc) => {
+            return {
+              ...doc.data(),
+            };
+          })
+        );
+      });
+    };
 
     unsubscribe();
   }, [players]);

@@ -46,12 +46,11 @@ const QuizBoard = () => {
   };
 
   useEffect(() => {
-    const unsubQuestionNumber = onSnapshot(
-      doc(db, "questionList", "Test1", "games", "game1"),
-      (doc) => {
+    const unsubQuestionNumber = () => {
+      onSnapshot(doc(db, "questionList", "Test1", "games", "game1"), (doc) => {
         setQuestionNumber(doc.data().currentQuestion - 1);
-      }
-    );
+      });
+    };
 
     let timer = setTimeout(() => setIsTimimg(false), 10000);
 
