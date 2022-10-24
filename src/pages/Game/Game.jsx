@@ -7,12 +7,12 @@ import WaitingDashboard from "../../components/WaitingDashboard/WaitingDashboard
 const Game = () => {
   const [isStart, setIsStart] = useState("WAITING");
 
-  const unsub = onSnapshot(
-    doc(db, "questionList", "Test1", "games", "game1"),
-    (doc) => {
+  const unsub = () => {
+    onSnapshot(doc(db, "questionList", "Test1", "games", "game1"), (doc) => {
       setIsStart(doc.data().status);
-    }
-  );
+    });
+    console.log("load");
+  };
 
   const startGame = async () => {
     await updateDoc(doc(db, "questionList", "Test1", "games", "game1"), {
@@ -22,6 +22,7 @@ const Game = () => {
 
   useEffect(() => {
     unsub();
+    console.log("load");
   }, [isStart]);
 
   return (

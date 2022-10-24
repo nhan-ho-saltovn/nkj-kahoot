@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
+import "antd/dist/antd.css";
 import reportWebVitals from "./reportWebVitals";
 import { AuthProvider } from "./context/auth.context";
 import { GameProvider } from "./context/game.context";
