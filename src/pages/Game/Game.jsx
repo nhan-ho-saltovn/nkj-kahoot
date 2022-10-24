@@ -19,6 +19,7 @@ const Game = () => {
         doc(db, "questionList", "Test1", "games", "game1"),
         (doc) => {
           setIsStart(doc.data().status);
+          console.log(doc.data());
         },
         (error) => {
           console.log(error);
