@@ -26,6 +26,8 @@ const Game = () => {
       );
       console.log("load");
     };
+
+    unsub();
     return () => {
       unsub();
     };
